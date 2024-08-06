@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'places.apps.PlacesConfig',
 ]
 
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
