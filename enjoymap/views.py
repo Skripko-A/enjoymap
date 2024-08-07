@@ -1,10 +1,7 @@
-import json
-
 from django.shortcuts import render
 from places.models import Location
 from django.shortcuts import get_object_or_404
 from django.http import JsonResponse, HttpResponse
-from .settings import MEDIA_ROOT
 
 
 def show_map(request):
@@ -20,17 +17,16 @@ def show_map(request):
                         }
                    }
         features.append(feature)
-    places_geojson = {'type': 'FeaturesCollection', 'features': features}
+    places_geojson = {'type': 'FeatureCollection', 'features': features}
 
     return render(request, 'show_map.html', context={'places_geojson': places_geojson})
 
 
 def show_location(request, location_id):
     location = get_object_or_404(Location, pk=location_id)
-    image_urls = [str(image.filename.url) for image in location.image.all()]
     location_json = {
         'title': location.title,
-        'imgs': image_urls,
+        'imgs': [str(image.filename.url) for image in location.images.all()],
         'description_short': location.description_short,
         'description_long': location.description_long,
         'coordinates': {
