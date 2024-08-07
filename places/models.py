@@ -1,5 +1,5 @@
 from django.db import models
-
+from enjoymap.settings import MEDIA_URL
 
 class Image(models.Model):
     title = models.CharField(max_length=255, default='')

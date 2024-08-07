@@ -27,7 +27,7 @@ def show_map(request):
 
 def show_location(request, location_id):
     location = get_object_or_404(Location, pk=location_id)
-    image_urls = [str(image.filename) for image in location.image.all()]
+    image_urls = [str(image.filename.url) for image in location.image.all()]
     location_json = {
         'title': location.title,
         'imgs': image_urls,
