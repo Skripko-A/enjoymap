@@ -10,4 +10,4 @@ class LocationAdmin(admin.ModelAdmin):
 
 @admin.register(Image)
 class ImageAdmin(admin.ModelAdmin):
-    list_display = ('title', 'image')
+    list_display = ('title', 'filename')
