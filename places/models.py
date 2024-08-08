@@ -5,7 +5,6 @@ from enjoymap.settings import MEDIA_URL
 class Location(models.Model):
     title = models.CharField(max_length=100, default='', verbose_name='Название')
     place_id = models.CharField(max_length=100, default='')
-    detailsUrl = models.CharField(max_length=100, default='')
     description_short = models.TextField(null=True, blank=True, verbose_name='Краткое описание')
     description_long = models.TextField(null=True, blank=True, verbose_name='Подробное описание')
     lng = models.DecimalField(max_digits=18, decimal_places=14, default=37.6155600, verbose_name='Долгота')
