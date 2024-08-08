@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.urls import reverse
 from places.models import Location
 from django.shortcuts import get_object_or_404
-from django.http import JsonResponse, HttpResponse
+from django.http import JsonResponse
 
 
 def show_map(request):

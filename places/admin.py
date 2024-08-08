@@ -5,9 +5,6 @@ from adminsortable2.admin import SortableAdminMixin, SortableTabularInline, Sort
 from .models import Location, Image
 
 
-# Register your models here.
-
-
 @admin.register(Image)
 class ImageAdmin(SortableAdminMixin, admin.ModelAdmin):
     list_display = ['filename', 'get_preview']

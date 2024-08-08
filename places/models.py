@@ -1,8 +1,6 @@
 from django.db import models
 from tinymce.models import HTMLField
 
-from enjoymap.settings import MEDIA_URL
-
 
 class Location(models.Model):
     title = models.CharField(max_length=100, default='', verbose_name='Название')
