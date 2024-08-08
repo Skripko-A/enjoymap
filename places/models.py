@@ -17,7 +17,10 @@ class Location(models.Model):
 class Image(models.Model):
     filename = models.ImageField(upload_to='places/images', verbose_name='Картинка')
     location = models.ForeignKey(Location, on_delete=models.SET_NULL, related_name='images', null=True)
-    position = models.IntegerField(verbose_name='Позиция', null=True)
+    position = models.PositiveIntegerField(verbose_name='Позиция', null=True, blank=True, default=0, db_index=True)
+
+    class Meta:
+        ordering = ['position']
 
     def __str__(self):
         return f'{self.filename}'

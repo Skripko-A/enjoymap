@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.utils.html import format_html
-from django.utils.safestring import mark_safe
+from adminsortable2.admin import SortableAdminMixin, SortableTabularInline, SortableAdminBase
 
 from .models import Location, Image
 
@@ -9,17 +9,17 @@ from .models import Location, Image
 
 
 @admin.register(Image)
-class ImageAdmin(admin.ModelAdmin):
+class ImageAdmin(SortableAdminMixin, admin.ModelAdmin):
     list_display = ['filename', 'get_preview']
     readonly_fields = ['get_preview']
-    fields = ['filename', 'get_preview', 'position']
 
     def get_preview(self, obj):
         return format_html('<img src="{}" style="max-width:300px; max-height:200px"/>'.format(obj.filename.url))
 
 
-class ImageInline(admin.TabularInline):
+class ImageTabularInline(SortableTabularInline):
     readonly_fields = ['get_preview']
+    fields = ['position', ('filename', 'get_preview')]
     model = Image
 
     def get_preview(self, obj):
@@ -27,6 +27,6 @@ class ImageInline(admin.TabularInline):
 
 
 @admin.register(Location)
-class LocationAdmin(admin.ModelAdmin):
+class LocationAdmin(SortableAdminBase, admin.ModelAdmin):
     list_display = ('title',)
-    inlines = [ImageInline, ]
+    inlines = [ImageTabularInline, ]
