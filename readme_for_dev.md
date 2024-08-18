@@ -52,10 +52,9 @@ DEBUG = True (development) / False (production)
 
 ### Настройка базы данных
 
-Создайте базу данных и примените миграции:
+Создайте базу данных:
 
 ```bash
-python manage.py places makemigrations
 python manage.py migrate
 ```
 
