@@ -45,9 +45,10 @@ pip install -r requirements.txt
 
 Создайте файл .env в корне проекта, запишите туда эти переменные и их значения:
 ```
-SECRET_KEY = 'your_secret_key_here'
-ALLOWED_HOSTS = ['127.0.0.1', 'ip or hostname']
-DEBUG = True (development) / False (production)
+SECRET_KEY = 'введите сюда ваш SECRET_KEY'
+ALLOWED_HOSTS = '127.0.0.1', 'ip адрес или hostname'
+DEBUG = True для разработки или False для разворачвания на сервере для работы
+CSRF_TRUSTED_ORIGINS = 'https://www.mysute.com сюда напишите url вашего сервера'
 ```
 
 ### Настройка базы данных
