@@ -21,8 +21,8 @@ def post_location(location_json):
     location, created = Location.objects.get_or_create(
         title=location_json['title'],
         defaults={
-            'description_short': location_json['description_short'],
-            'description_long': location_json['description_long'],
+            'short_description': location_json['description_short'],
+            'long_description': location_json['description_long'],
             'lng': location_json['coordinates']['lng'],
             'lat': location_json['coordinates']['lat']
         }
