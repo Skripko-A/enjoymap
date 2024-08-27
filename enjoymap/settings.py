@@ -1,7 +1,7 @@
 import os.path
 from pathlib import Path
 
-from django.conf.global_settings import APPEND_SLASH
+from django.conf.global_settings import APPEND_SLASH, SECURE_SSL_REDIRECT
 from environs import Env
 
 env = Env()
@@ -37,7 +37,9 @@ MEDIA_URL = '/media/'
 
 SECURE_HSTS_SECONDS = 60
 SECURE_HSTS_INCLUDE_SUBDOMAINS = True
-# SECURE_SSL_REDIRECT = True
+if env.bool('DEBUG'):
+    SECURE_SSL_REDIRECT = False
+else: SECURE_SSL_REDIRECT = True
 SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True
 SECURE_HSTS_PRELOAD = True
