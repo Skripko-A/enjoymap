@@ -27,8 +27,8 @@ def show_location(request, location_id):
     location_json = {
         'title': location.title,
         'imgs': [f'{image.file.url}' for image in location.images.all()],
-        'description_short': location.description_short,
-        'description_long': location.description_long,
+        'description_short': location.short_description,
+        'description_long': location.long_description,
         'coordinates': {
             'lat': str(location.lat),
             'lng': str(location.lng)
