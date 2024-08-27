@@ -12,6 +12,7 @@ IMAGE_PREVIEW_HEIGHT = '200px'
 class ImageAdmin(SortableAdminMixin, admin.ModelAdmin):
     list_display = ['file', 'get_preview']
     readonly_fields = ['get_preview']
+    autocomplete_fields = ['location']
 
     def get_preview(self, img):
         return format_html(
