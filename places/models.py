@@ -22,4 +22,4 @@ class Image(models.Model):
         ordering = ['position']
 
     def __str__(self):
-        return self.file
+        return f'self.file'
