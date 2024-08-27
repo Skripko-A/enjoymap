@@ -26,7 +26,7 @@ def show_location(request, location_id):
     location = get_object_or_404(Location, pk=location_id)
     location_json = {
         'title': location.title,
-        'imgs': [f'{image.file.url}' for image in location.images.all()],
+        'imgs': [image.file.url for image in location.images.all()],
         'description_short': location.short_description,
         'description_long': location.long_description,
         'coordinates': {

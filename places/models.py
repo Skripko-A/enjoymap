@@ -10,7 +10,7 @@ class Location(models.Model):
     lat = models.DecimalField(max_digits=18, decimal_places=14, verbose_name='Широта')
 
     def __str__(self):
-        return f'{self.title}'
+        return self.title
 
 
 class Image(models.Model):
@@ -22,4 +22,4 @@ class Image(models.Model):
         ordering = ['position']
 
     def __str__(self):
-        return f'{self.file}'
+        return self.file
