@@ -10,8 +10,8 @@ class ImageAdmin(SortableAdminMixin, admin.ModelAdmin):
     list_display = ['file', 'get_preview']
     readonly_fields = ['get_preview']
 
-    def get_preview(self, obj):
-        return format_html('<img src="{}" style="max-width:300px; max-height:200px"/>'.format(obj.file.url))
+    def get_preview(self, img):
+        return format_html('<img src="{}" style="max-width:300px; max-height:200px"/>'.format(img.file.url))
 
 
 class ImageTabularInline(SortableTabularInline):
@@ -19,8 +19,8 @@ class ImageTabularInline(SortableTabularInline):
     fields = ['position', ('file', 'get_preview')]
     model = Image
 
-    def get_preview(self, obj):
-        return format_html('<img src="{}" style="max-width:300px; max-height:200px"/>'.format(obj.file.url))
+    def get_preview(self, img):
+        return format_html('<img src="{}" style="max-width:300px; max-height:200px"/>'.format(img.file.url))
 
 
 @admin.register(Location)
