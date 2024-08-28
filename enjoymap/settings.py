@@ -1,7 +1,6 @@
 import os.path
 from pathlib import Path
 
-from django.conf.global_settings import APPEND_SLASH, SECURE_SSL_REDIRECT
 from environs import Env
 
 env = Env()
@@ -11,9 +10,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = env.str('SECRET_KEY')
 
-ALLOWED_HOSTS = env.list('ALLOWED_HOSTS')
+ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', default=['127.0.0.1'])
 
-DEBUG = env.bool('DEBUG')
+DEBUG = env.bool('DEBUG', default=False)
 
 STATIC_URL = '/static/'
 
@@ -43,7 +42,7 @@ else: SECURE_SSL_REDIRECT = True
 SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True
 SECURE_HSTS_PRELOAD = True
-CSRF_TRUSTED_ORIGINS = env.list('CSRF_TRUSTED_ORIGINS')
+CSRF_TRUSTED_ORIGINS = env.list('CSRF_TRUSTED_ORIGINS', default=['127.0.0.1'])
 
 INSTALLED_APPS = [
     'django.contrib.admin',
