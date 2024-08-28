@@ -53,7 +53,8 @@ class Command(BaseCommand):
                 for image_number, image_url in enumerate(serialize_location['imgs'], start=1):
                     fetch_and_post_image(image_url, location_id, image_number, serialize_location)
                 self.stdout.write(self.style.SUCCESS(f'Successfully imported {serialize_location["title"]}'))
-            except requests.RequestException as e:
-                self.stderr.write(self.style.ERROR(f'Failed to fetch JSON from {url}: {e}'))
-            except Exception as e:
-                self.stderr.write(self.style.ERROR(f'An error occurred: {e}'))
+            except requests.exceptions.HTTPError as HTTP_error:
+                self.stderr.write(self.style.ERROR(f'HTTP error {HTTP_error}'))
+            except requests.exceptions.ConnectionError as connection_error:
+                self.stderr.write(self.style.ERROR(f'Connection error {connection_error}'))
+
