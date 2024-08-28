@@ -4,10 +4,6 @@ import requests
 from django.core.files.base import ContentFile
 from django.core.management.base import BaseCommand
 
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "enjoymap.settings")
-import django
-
-django.setup()
 from places.models import Location, Image
 
 
@@ -34,15 +30,14 @@ def fetch_and_post_image(image_url, location_id, image_number, location_json):
     response = requests.get(image_url)
     response.raise_for_status()
 
-    image_instance, created = Image.objects.get_or_create(
-        location_id=location_id,
-        position=image_number
-    )
-
     file_format = image_url.rsplit('.', 1)[-1].lower()
     filename = f'{location_json["title"]}_{image_number}.{file_format}'
-    image_instance.file.save(filename, ContentFile(response.content), save=True)
-
+    content_file = ContentFile(response.content, name=filename)
+    Image.objects.get_or_create(
+                                location_id=location_id,
+                                position=image_number,
+                                file=content_file
+                                )
 
 class Command(BaseCommand):
     help = 'Запустите команду с аргументом в виде сссылки на json локации'
@@ -53,11 +48,11 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         for url in options['json_urls']:
             try:
-                location_json = get_location_json(url)
-                location_id = post_location(location_json)
-                for image_number, image_url in enumerate(location_json['imgs'], start=1):
-                    fetch_and_post_image(image_url, location_id, image_number, location_json)
-                self.stdout.write(self.style.SUCCESS(f'Successfully imported {location_json["title"]}'))
+                serialize_location = get_location_json(url)
+                location_id = post_location(serialize_location)
+                for image_number, image_url in enumerate(serialize_location['imgs'], start=1):
+                    fetch_and_post_image(image_url, location_id, image_number, serialize_location)
+                self.stdout.write(self.style.SUCCESS(f'Successfully imported {serialize_location["title"]}'))
             except requests.RequestException as e:
                 self.stderr.write(self.style.ERROR(f'Failed to fetch JSON from {url}: {e}'))
             except Exception as e:
