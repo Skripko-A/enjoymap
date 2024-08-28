@@ -23,8 +23,8 @@ def show_map(request):
 
 
 def show_location(request, location_id):
-    location = get_object_or_404(Location, pk=location_id)
-    location_json = {
+    location = get_object_or_404(Location.objects.select_related(), pk=location_id)
+    serialize_location = {
         'title': location.title,
         'imgs': [image.file.url for image in location.images.all()],
         'description_short': location.short_description,
@@ -34,4 +34,4 @@ def show_location(request, location_id):
             'lng': str(location.lng)
         }
     }
-    return JsonResponse(location_json, safe=False, json_dumps_params={'ensure_ascii': False, 'indent': 4})
+    return JsonResponse(serialize_location, safe=False, json_dumps_params={'ensure_ascii': False, 'indent': 4})
