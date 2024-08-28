@@ -1,5 +1,4 @@
 import os.path
-from email.policy import default
 from pathlib import Path
 
 from environs import Env
