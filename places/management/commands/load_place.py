@@ -1,6 +1,4 @@
-import os
 import requests
-
 from django.core.files.base import ContentFile
 from django.core.management.base import BaseCommand
 
@@ -14,15 +12,10 @@ def get_location_json(json_url):
 
 
 def post_location(location_json):
-    location, created = Location.objects.get_or_create(
-        title=location_json['title'],
-        defaults={
-            'short_description': location_json['description_short'],
-            'long_description': location_json['description_long'],
-            'lng': location_json['coordinates']['lng'],
-            'lat': location_json['coordinates']['lat']
-        }
-    )
+    location, created = Location.objects.get_or_create(title=location_json['title'],
+        defaults={'short_description': location_json['description_short'],
+            'long_description': location_json['description_long'], 'lng': location_json['coordinates']['lng'],
+            'lat': location_json['coordinates']['lat']})
     return location.id
 
 
@@ -33,11 +26,8 @@ def fetch_and_post_image(image_url, location_id, image_number, location_json):
     file_format = image_url.rsplit('.', 1)[-1].lower()
     filename = f'{location_json["title"]}_{image_number}.{file_format}'
     content_file = ContentFile(response.content, name=filename)
-    Image.objects.get_or_create(
-                                location_id=location_id,
-                                position=image_number,
-                                file=content_file
-                                )
+    Image.objects.get_or_create(location_id=location_id, position=image_number, file=content_file)
+
 
 class Command(BaseCommand):
     help = 'Запустите команду с аргументом в виде сссылки на json локации'
@@ -57,4 +47,3 @@ class Command(BaseCommand):
                 self.stderr.write(self.style.ERROR(f'HTTP error {HTTP_error}'))
             except requests.exceptions.ConnectionError as connection_error:
                 self.stderr.write(self.style.ERROR(f'Connection error {connection_error}'))
-
