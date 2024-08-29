@@ -23,7 +23,7 @@ def show_map(request):
 
 
 def show_location(request, location_id):
-    location = get_object_or_404(Location.objects.select_related(), pk=location_id)
+    location = get_object_or_404(Location.objects.prefetch_related('images'), pk=location_id)
     serialize_location = {
         'title': location.title,
         'imgs': [image.file.url for image in location.images.all()],
