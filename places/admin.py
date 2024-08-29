@@ -1,12 +1,12 @@
+from adminsortable2.admin import SortableAdminMixin, SortableTabularInline, SortableAdminBase
 from django.contrib import admin
 from django.utils.html import format_html
-from adminsortable2.admin import SortableAdminMixin, SortableTabularInline, SortableAdminBase
 
 from .models import Location, Image
 
-
 IMAGE_PREVIEW_WIDTH = '300px'
 IMAGE_PREVIEW_HEIGHT = '200px'
+
 
 @admin.register(Image)
 class ImageAdmin(SortableAdminMixin, admin.ModelAdmin):
@@ -15,12 +15,9 @@ class ImageAdmin(SortableAdminMixin, admin.ModelAdmin):
     autocomplete_fields = ['location']
 
     def get_preview(self, img):
-        return format_html(
-            '<img src="{}" style="max-width:{}; max-height:{}"/>',
-            img.file.url,
-            IMAGE_PREVIEW_WIDTH,
-            IMAGE_PREVIEW_HEIGHT
-        )
+        return format_html('<img src="{}" style="max-width:{}; max-height:{}"/>',
+                           img.file.url, IMAGE_PREVIEW_WIDTH, IMAGE_PREVIEW_HEIGHT)
+
 
 class ImageTabularInline(SortableTabularInline):
     readonly_fields = ['get_preview']
@@ -28,12 +25,8 @@ class ImageTabularInline(SortableTabularInline):
     model = Image
 
     def get_preview(self, img):
-        return format_html(
-            '<img src="{}" style="max-width:{}; max-height:{}"/>',
-            img.file.url,
-            IMAGE_PREVIEW_WIDTH,
-            IMAGE_PREVIEW_HEIGHT
-        )
+        return format_html('<img src="{}" style="max-width:{}; max-height:{}"/>',
+                           img.file.url, IMAGE_PREVIEW_WIDTH, IMAGE_PREVIEW_HEIGHT)
 
 
 @admin.register(Location)
